@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d111a">
+  <meta name="description" content="Pace Studio — dashboard interattiva per analizzare le tue corse.">
+  <title>Running Analytics</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a href="#dashboard" class="brand"><span class="brand-icon">↗</span><span>PACE<span class="brand-light">STUDIO</span><small>RUNNING INTELLIGENCE</small></span></a>
+      <div class="nav-label">WORKSPACE</div>
+      <nav aria-label="Navigazione principale">
+        <a class="nav-link active" href="#dashboard"><span class="nav-icon">◫</span> Panoramica</a>
+        <a class="nav-link" href="#progressi"><span class="nav-icon">⌁</span> Progressi</a>
+        <a class="nav-link" href="#attivita"><span class="nav-icon">≡</span> Le mie corse</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="side-goal"><span class="eyebrow">IL TUO OBIETTIVO</span><div class="goal-head"><b>50 km</b><span>mensili</span></div><div class="progress-track"><div id="goalProgress" class="progress-fill"></div></div><p id="goalText">0 / 50 km completati</p></div>
+        <div class="mini-profile"><div class="avatar">R</div><div><strong>Runner</strong><small>Il tuo spazio personale</small></div><span class="profile-dot"></span></div>
+      </div>
+    </aside>
+
+    <main id="dashboard" class="main-content">
+      <header class="topbar"><div class="crumb">Dashboard <span>/</span> <b>Panoramica</b></div><div class="header-actions"><span class="today" id="today"></span><button class="icon-button" id="resetButton" aria-label="Ripristina dati dimostrativi" title="Ripristina dati demo">↻</button><button id="addRunButton" class="btn btn-primary"><span>＋</span> Nuova corsa</button></div></header>
+      <section class="intro"><div><div class="kicker"><span class="kicker-dot"></span> YOUR PERFORMANCE, REIMAGINED</div><h1>Ogni passo <em>conta.</em></h1><p>Una visione chiara dei tuoi allenamenti, dei tuoi record e dei tuoi progressi.</p></div><div class="intro-badge"><span>●</span> LIVE ANALYTICS</div></section>
+
+      <section class="hero-tilt" id="heroTilt" aria-label="Immagine scarpe running con effetto profondità 3D">
+        <div class="hero-art" aria-hidden="true"></div>
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-content"><div class="hero-pill">THE RUNNING EXPERIENCE <span>↗</span></div><h2>Faster.<br><span>Stronger.</span><br>Further.</h2><p>I numeri raccontano la tua storia.<br>Continua a scriverla.</p><a href="#progressi" class="hero-cta">Esplora i progressi <span>↗</span></a></div>
+        <div class="hero-floating"><span class="pulse-ring">↗</span><div><strong>KEEP MOVING</strong><small>La prossima corsa è la migliore.</small></div></div>
+        <span class="hero-corner">01 / PERFORMANCE LAB</span>
+      </section>
+
+      <section class="metrics" aria-label="Statistiche di corsa">
+        <article class="metric-card"><div class="metric-top"><span>DISTANZA TOTALE</span><span class="metric-icon">↗</span></div><div class="metric-value"><strong id="totalDistance">0,0</strong><span>km</span></div><p>Chilometri percorsi</p><div class="metric-bottom"><span class="metric-signal">●</span> Tutte le corse</div></article>
+        <article class="metric-card"><div class="metric-top"><span>TEMPO TOTALE</span><span class="metric-icon">◷</span></div><div class="metric-value"><strong id="totalDuration">0h 00m</strong></div><p>Tempo in movimento</p><div class="metric-bottom">La costanza fa la differenza</div></article>
+        <article class="metric-card"><div class="metric-top"><span>PASSO MEDIO</span><span class="metric-icon">⌁</span></div><div class="metric-value"><strong id="averagePace">—</strong><span>/km</span></div><p>Minuti per chilometro</p><div class="metric-bottom">Calcolato su tutte le corse</div></article>
+        <article class="metric-card accent-card"><div class="metric-top"><span>MIGLIORAMENTO</span><span class="metric-icon">✦</span></div><div class="metric-value"><strong id="improvement">—</strong><span id="improvementUnit">%</span></div><p id="improvementInfo">Confronto sulla stessa distanza</p><div class="metric-bottom"><label for="comparisonDistance">CONFRONTA</label><select id="comparisonDistance" aria-label="Distanza da confrontare"></select></div></article>
+      </section>
+
+      <section id="progressi" class="lower-grid">
+        <article class="panel chart-panel"><div class="panel-heading"><div><span class="eyebrow">PERFORMANCE OVERVIEW</span><h3>La tua evoluzione</h3><p>Passo medio per ciascuna corsa, dalla più vecchia alla più recente.</p></div><div class="legend"><i></i> Passo (min/km)</div></div><div class="chart-wrap"><svg id="paceChart" viewBox="0 0 660 260" role="img" aria-label="Grafico andamento del passo"></svg></div><div class="chart-footer"><span>Ogni punto rappresenta una corsa</span><span>↓ Più basso = più veloce</span></div></article>
+        <article class="panel records-panel"><div class="panel-heading"><div><span class="eyebrow">PERSONAL BESTS</span><h3>I tuoi record</h3><p>Le prestazioni da battere.</p></div><span class="record-star">✳</span></div><div class="record-item"><div class="record-icon">↗</div><div class="record-detail"><small>CORSA PIÙ LUNGA</small><strong id="longestDistance">—</strong><span id="longestDate">Nessun dato</span></div></div><div class="record-divider"></div><div class="record-item"><div class="record-icon fast">ϟ</div><div class="record-detail"><small>CORSA PIÙ VELOCE</small><strong id="fastestPace">—</strong><span id="fastestDate">Nessun dato</span></div></div><div class="records-note"><span>✦</span> Ogni nuovo allenamento è un'opportunità.</div></article>
+      </section>
+
+      <section id="attivita" class="panel activities-panel"><div class="panel-heading activities-heading"><div><span class="eyebrow">RUNNING LOG</span><h3>Attività recenti <span id="runCount" class="count">0</span></h3><p>Visualizza e gestisci lo storico delle tue corse.</p></div><button class="btn btn-outline" id="addRunSecondary">＋ Aggiungi attività</button></div><div class="table-scroll"><table><thead><tr><th>DATA</th><th>DISTANZA</th><th>DURATA</th><th>PASSO</th><th>DISLIVELLO</th><th>FC MEDIA</th><th></th></tr></thead><tbody id="runsTable"></tbody></table></div><div class="table-footer"><span>Le attività vengono salvate nel tuo browser.</span><span id="tableCount"></span></div></section>
+      <footer class="footer"><span>PACE STUDIO © 2026</span><span>BUILT FOR THE LOVE OF RUNNING <span class="footer-spark">✳</span></span></footer>
+    </main>
+  </div>
+
+  <dialog id="runDialog" class="run-dialog"><form id="runForm"><div class="dialog-header"><div><span class="eyebrow">TRACK YOUR JOURNEY</span><h2>Nuova corsa</h2><p>Registra un nuovo allenamento.</p></div><button type="button" class="dialog-close" id="closeDialog" aria-label="Chiudi">×</button></div><div class="form-grid"><label class="full">Data <input name="data" type="date" required></label><label>Distanza (km) <input name="distanza" type="number" min="0.01" max="1000" step="0.01" placeholder="5.00" required></label><label>Durata (minuti) <input name="durataMinuti" type="number" min="0.01" max="100000" step="0.01" placeholder="28.50" required></label><label>Dislivello (m) <input name="dislivello" type="number" min="0" max="100000" step="1" value="0" required></label><label>Frequenza cardiaca (bpm) <input name="frequenzaCardiaca" type="number" min="30" max="250" step="1" placeholder="Opzionale"></label></div><p id="formError" class="form-error" role="alert"></p><div class="dialog-actions"><button class="btn btn-outline" type="button" id="cancelDialog">Annulla</button><button class="btn btn-primary" type="submit">Salva corsa ↗</button></div></form></dialog>
+</body>
+</html>
